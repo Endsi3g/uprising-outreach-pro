@@ -9,9 +9,23 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@supabase/supabase-js": "^2.99.2",
+    "clsx": "^2.1.1",
+    "googleapis": "^171.4.0",
+    "lucide-react": "^0.577.0",
     "next": "16.1.7",
+    "ollama": "^0.6.3",
+    "openai": "^6.32.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "recharts": "^3.8.0",
+    "resend": "^6.9.4",
+    "tailwind-merge": "^3.5.0",
+    "twilio": "^5.13.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
