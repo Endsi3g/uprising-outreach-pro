@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Uprising Outreach Pro
 
-## Getting Started
+Système de prospection B2B multicanal (Email + SMS) avec intelligence artificielle locale (**Ollama**) et interface premium.
 
-First, run the development server:
+## 🛠️ Stack Technique
+- **Frontend** : Next.js 14, TailwindCSS, Shadcn/UI, Recharts.
+- **Backend** : Next.js API Routes, Supabase (PostgreSQL).
+- **IA** : Ollama en local avec le modèle **`kimi-k2.5`**.
+- **Canaux** : Gmail API (OAuth2), Twilio (SMS), Resend (Transactional Email).
+- **Automation** : Inngest/Cron compatible et Webhooks pour le scraping (Apify).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📋 Prérequis
+1. **Ollama** : Doit être installé et lancé.
+   ```bash
+   ollama pull kimi-k2.5
+   ```
+2. **Supabase** : Un projet actif avec le schéma fourni dans `supabase/migrations`.
+3. **Node.js** : v18+ recommandé.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Installation & Lancement
+1. Clone le projet ou accède au dossier.
+2. Installe les dépendances :
+   ```bash
+   npm install
+   ```
+3. Configure ton fichier `.env.local` (voir `.env.local.example`).
+4. Lance l'environnement de développement :
+   ```powershell
+   .\dev.ps1
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Structure du Projet
+- `src/lib/llm.ts` : Moteur de personnalisation IA.
+- `src/lib/orchestration.ts` : Logique de séquence multicanale.
+- `src/lib/scraping.ts` : Traitement des données entrantes.
+- `src/app/` : Pages du dashboard (Prospects, Campagnes, Analytics).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Propulsé par Uprising Studio • v1.0.0*
