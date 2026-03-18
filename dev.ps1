@@ -1,45 +1,43 @@
-# Script de développement pour Uprising Outreach Pro
+# Script de developpement pour Uprising Outreach Pro
 # Usage: .\dev.ps1
 
-Write-Host "🚀 Démarrage de l'environnement de développement..." -ForegroundColor Green
+Write-Host "Starting development environment..." -ForegroundColor Green
 
-# Vérifier si Ollama est lancé
+# Check Ollama
 if (Get-Process -Name "ollama" -ErrorAction SilentlyContinue) {
-    Write-Host "✅ Ollama est en cours d'exécution." -ForegroundColor Cyan
+    Write-Host "Ollama is running." -ForegroundColor Cyan
 } else {
-    Write-Host "⚠️ Ollama n'est pas détecté. Assure-toi de le lancer pour l'IA locale." -ForegroundColor Yellow
+    Write-Host "Ollama not detected. Launch it for local AI." -ForegroundColor Yellow
 }
 
-# Charger les variables d'environnement si .env.local existe
+# Check .env.local
 if (Test-Path ".env.local") {
-    Write-Host "✅ Chargement de .env.local" -ForegroundColor Cyan
+    Write-Host ".env.local found." -ForegroundColor Cyan
 } else {
-    Write-Host "❌ .env.local introuvable. Copie .env.local.example pour commencer." -ForegroundColor Red
+    Write-Host ".env.local missing. Copy .env.local.example to start." -ForegroundColor Red
 }
 
-# Vérifier Supabase Docker
-Write-Host "🐳 Vérification de Supabase Docker..." -ForegroundColor Cyan
+# Check Supabase Docker
+Write-Host "Checking Supabase Docker..." -ForegroundColor Cyan
 try {
     $dockerCheck = & docker ps --filter "name=supabase-db" --format "{{.Names}}"
     if ($dockerCheck) {
-        Write-Host "✅ Supabase Docker ($dockerCheck) est en cours d'exécution." -ForegroundColor Green
+        Write-Host "Supabase Docker is running." -ForegroundColor Green
     } else {
-        Write-Host "⚠️ Supabase Docker n'est pas lancé." -ForegroundColor Yellow
-        $choice = Read-Host "Voulez-vous lancer Supabase via Docker Compose ? (y/n)"
+        Write-Host "Supabase Docker is NOT running." -ForegroundColor Yellow
+        $choice = Read-Host "Launch Supabase via Docker Compose? (y/n)"
         if ($choice -eq 'y') {
             if (-not (Test-Path "supabase/docker/.env")) {
-                Write-Host "📝 Création de supabase/docker/.env..." -ForegroundColor Yellow
+                Write-Host "Creating supabase/docker/.env..." -ForegroundColor Yellow
                 Copy-Item "supabase/docker/.env.example" "supabase/docker/.env"
             }
-            Write-Host "🚀 Lancement de Docker Compose..." -ForegroundColor Green
+            Write-Host "Launching Docker Compose..." -ForegroundColor Green
             & docker compose -f supabase/docker/docker-compose.yml up -d
         }
     }
 } catch {
-    Write-Host "⚠️ Docker n'est pas disponible ou erreur lors de la vérification." -ForegroundColor Yellow
+    Write-Host "Docker not available or error during check." -ForegroundColor Yellow
 }
 
-
-
-Write-Host "📡 Lancement de Next.js sur http://localhost:3000" -ForegroundColor Green
+Write-Host "Starting Next.js on http://localhost:3000" -ForegroundColor Green
 npm run dev
