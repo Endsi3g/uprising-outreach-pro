@@ -19,8 +19,9 @@ if (Test-Path ".env.local") {
 
 # Vérifier Supabase Docker
 Write-Host "🐳 Vérification de Supabase Docker..." -ForegroundColor Cyan
-if (docker ps --filter "name=supabase-db" --format "{{.Names}}") {
-    Write-Host "✅ Supabase Docker est en cours d'exécution." -ForegroundColor Green
+$dockerCheck = docker ps --filter "name=supabase-db" --format "{{.Names}}"
+if ($dockerCheck) {
+    Write-Host "✅ Supabase Docker ($dockerCheck) est en cours d'exécution." -ForegroundColor Green
 } else {
     Write-Host "⚠️ Supabase Docker n'est pas lancé." -ForegroundColor Yellow
     $choice = Read-Host "Voulez-vous lancer Supabase via Docker Compose ? (y/n)"
@@ -37,6 +38,7 @@ if (docker ps --filter "name=supabase-db" --format "{{.Names}}") {
         }
     }
 }
+
 
 Write-Host "📡 Lancement de Next.js sur http://localhost:3000" -ForegroundColor Green
 npm run dev
