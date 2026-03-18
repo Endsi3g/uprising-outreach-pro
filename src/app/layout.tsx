@@ -1,4 +1,5 @@
 import React from 'react';
+import './globals.css';
 import { LayoutDashboard, Users, Send, Settings, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,7 +14,7 @@ export default function RootLayout({
         {/* Sidebar */}
         <aside className="w-64 border-r border-zinc-800 flex flex-col p-6 space-y-8">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-emerald-500 rounded-md flex items-center justify-center font-bold text-zinc-950">U</div>
+            <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">U</div>
             <span className="text-xl font-bold tracking-tight text-white">Uprising</span>
           </div>
 

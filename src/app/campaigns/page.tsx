@@ -31,44 +31,41 @@ export default function CampaignsPage() {
           <h1 className="text-2xl font-bold text-white">Vos Campagnes</h1>
           <p className="text-zinc-500 text-sm">Orchestrez vos séquences d'emails et SMS.</p>
         </div>
-        <button className="flex items-center space-x-2 bg-emerald-500 text-zinc-950 px-4 py-2 rounded-xl text-sm font-bold hover:bg-emerald-400 transition-colors">
+        <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-blue-500 transition-colors shadow-lg shadow-blue-500/20">
           <Plus size={18} />
           <span>Nouvelle Campagne</span>
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Mock Campaign Card */}
-        <div className="glass p-6 rounded-2xl card-hover flex flex-col space-y-4">
-          <div className="flex justify-between items-start">
-            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-              <Send size={20} />
+        {campaigns.map((campaign) => (
+          <div key={campaign.id} className="glass p-6 rounded-2xl card-hover flex flex-col space-y-4">
+            <div className="flex justify-between items-start">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                <Send size={20} />
+              </div>
+              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${campaign.is_active ? 'text-blue-400 bg-blue-400/10 border-blue-400/20' : 'text-zinc-500 bg-zinc-500/10 border-zinc-500/20'}`}>
+                {campaign.is_active ? 'Actif' : 'Inactif'}
+              </span>
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20">Actif</span>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-white">Prospection Québec - Rénovation</h3>
-            <p className="text-xs text-zinc-500">Séquence: Email (J1) → SMS (J3) → Email (J7)</p>
-          </div>
-          <div className="flex items-center space-x-4 pt-4 border-t border-zinc-800/50">
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="w-6 h-6 rounded-full border border-zinc-950 bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-400">{i}</div>
-              ))}
-              <div className="w-6 h-6 rounded-full border border-zinc-950 bg-zinc-900 flex items-center justify-center text-[10px] text-zinc-500">+85</div>
+            <div>
+              <h3 className="text-lg font-bold text-white">{campaign.name}</h3>
+              <p className="text-xs text-zinc-500">{campaign.description || 'Aucune description'}</p>
             </div>
-            <span className="text-xs text-zinc-400">88 prospects engagés</span>
+            <div className="flex space-x-2 pt-4 border-t border-zinc-800/50">
+               <span className="text-xs text-zinc-400">Prêt pour l'engagement</span>
+            </div>
+            <div className="flex space-x-2 pt-2">
+              <button className="flex-1 bg-zinc-900 border border-zinc-800 py-2 rounded-xl text-xs font-bold hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2">
+                <Play size={14} />
+                <span>Lancer</span>
+              </button>
+              <button className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-colors">
+                <Settings size={14} className="text-zinc-500" />
+              </button>
+            </div>
           </div>
-          <div className="flex space-x-2 pt-2">
-            <button className="flex-1 bg-zinc-900 border border-zinc-800 py-2 rounded-xl text-xs font-bold hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2">
-              <Pause size={14} />
-              <span>Suspendre</span>
-            </button>
-            <button className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-colors">
-              <Settings size={14} className="text-zinc-500" />
-            </button>
-          </div>
-        </div>
+        ))}
 
         {/* Empty State / Add Card */}
         <button className="border-2 border-dashed border-zinc-800 p-6 rounded-2xl flex flex-col items-center justify-center space-y-2 hover:border-zinc-700 hover:bg-white/[0.01] transition-all group">

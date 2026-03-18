@@ -24,13 +24,16 @@ Exemple de ton: "Salut, j'ai vu ton site pour ${prospectData.company_name}. C'es
 `;
 
   try {
-    const response = await fetch('http://localhost:11434/api/chat', {
+    const apiBase = process.env.OLLAMA_API_BASE || 'http://localhost:11434';
+    const model = process.env.OLLAMA_MODEL || 'kimi-k2.5';
+    
+    const response = await fetch(`${apiBase}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'kimi-k2.5', // Mis à jour selon demande
+        model: model,
         messages: [{ role: 'user', content: prompt }],
         stream: false,
         format: 'json',

@@ -16,17 +16,17 @@ import {
 } from 'recharts';
 import { TrendingUp, Mail, MessageSquare, Calendar } from 'lucide-react';
 
-const data = [
-  { name: 'Lun', email: 40, sms: 24, rdv: 4 },
-  { name: 'Mar', email: 30, sms: 13, rdv: 2 },
-  { name: 'Mer', email: 20, sms: 98, rdv: 12 },
-  { name: 'Jeu', email: 27, sms: 39, rdv: 6 },
-  { name: 'Ven', email: 18, sms: 48, rdv: 8 },
-  { name: 'Sam', email: 23, sms: 38, rdv: 3 },
-  { name: 'Dim', email: 34, sms: 43, rdv: 5 },
-];
-
 export default function AnalyticsPage() {
+  const [data, setData] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    // Simulation ou futur fetch Supabase
+    // Pour l'instant on garde vide pour respecter le "no mock"
+    setLoading(false);
+  }, []);
+
+  if (loading) return <div className="p-10 text-zinc-500 italic">Chargement des statistiques...</div>;
   return (
     <div className="space-y-10">
       <div>

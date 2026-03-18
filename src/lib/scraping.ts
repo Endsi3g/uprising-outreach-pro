@@ -1,27 +1,47 @@
 import { supabase } from './supabase';
+import { generateProspectCopy } from './llm';
+import { calculateLeadScore } from './scoring';
+import { enrichSocialProfiles } from './social-enrichment';
 
 /**
  * Service pour traiter les données provenant d'Apify (ou autres scrapers).
  */
-export const processScrapedLead = async (rawData: any, campaignId: string) => {
+export async function processScrapedLead(lead: any) {
+  console.log(`⚙️ Traitement du prospect: ${lead.company_name}`);
+  
+  // 0. Enrichissement social
+  const social = lead.website ? await enrichSocialProfiles(lead.website) : { linkedin: null, facebook: null, instagram: null };
+  
+  // 1. Calculer le score d'intelligence
+  const scoring = await calculateLeadScore(lead.website, lead.metadata, social);
+  
+  // 2. Générer le contenu personnalisé
+  const copy = await generateProspectCopy({
+    ...lead,
+    score: scoring.total,
+    isOldWebsite: scoring.isOldWebsite,
+    social
+  });
+
   // Transformation des données Apify -> Schema Prospect
   const prospect = {
-    campaign_id: campaignId,
-    company_name: rawData.title || rawData.name || 'Inconnu',
-    website: rawData.website,
-    city: rawData.city || extractCity(rawData.address),
-    industry: rawData.categoryName || 'PME',
-    email: rawData.email || extractEmail(rawData.description),
-    phone_sms: formatPhone(rawData.phoneNumber || rawData.phone),
-    intent_type: 'google_maps_find',
-    intent_strength: 'medium',
-    metadata: {
-      google_stars: rawData.totalScore,
-      reviews_count: rawData.reviewsCount,
-      apify_url: rawData.url,
-      address: rawData.address,
-    },
+    campaign_id: lead.campaign_id,
+    company_name: lead.company_name,
+    website: lead.website,
+    city: lead.city,
+    industry: lead.industry,
+    email: lead.email,
+    phone_sms: lead.phone_sms,
+    intent_type: 'google_maps_find', // Assuming this remains constant or comes from lead
+    intent_strength: 'medium', // Assuming this remains constant or comes from lead
     status: 'new',
+    outreach_copy: copy,
+    score: scoring.total,
+    website_age_tag: scoring.isOldWebsite ? '> 3 ans' : 'Récent',
+    metadata: {
+      ...lead.metadata,
+      social
+    }
   };
 
   // Insertion dans Supabase

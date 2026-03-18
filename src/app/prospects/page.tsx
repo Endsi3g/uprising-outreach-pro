@@ -10,8 +10,10 @@ import {
   MessageSquare, 
   CheckCircle2, 
   Clock,
-  ExternalLink
+  ExternalLink,
+  Share2
 } from 'lucide-react';
+import { collaboration } from '@/lib/collaboration';
 
 export default function ProspectsPage() {
   const [prospects, setProspects] = useState<any[]>([]);
@@ -35,7 +37,7 @@ export default function ProspectsPage() {
     switch (status) {
       case 'new': return 'bg-blue-400/10 text-blue-400 border-blue-400/20';
       case 'contacted': return 'bg-amber-400/10 text-amber-400 border-amber-400/20';
-      case 'replied': return 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20';
+      case 'replied': return 'bg-blue-400/10 text-blue-400 border-blue-400/20';
       default: return 'bg-zinc-400/10 text-zinc-400 border-zinc-400/20';
     }
   };
@@ -70,8 +72,8 @@ export default function ProspectsPage() {
               <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Entreprise</th>
               <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Secteur / Ville</th>
               <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Statut</th>
+              <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Score / Age</th>
               <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Intent</th>
-              <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest">Dernier Contact</th>
               <th className="px-6 py-4 text-xs font-bold text-zinc-500 uppercase tracking-widest"></th>
             </tr>
           </thead>
@@ -116,8 +118,14 @@ export default function ProspectsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
+                    <div className="flex flex-col">
+                      <span className={`text-sm font-bold ${p.score > 70 ? 'text-blue-400' : 'text-zinc-400'}`}>{p.score || 0}%</span>
+                      <span className="text-[10px] text-zinc-500">{p.website_age_tag || 'N/A'}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
                     <div className="flex items-center space-x-1">
-                      <div className={`w-1.5 h-1.5 rounded-full ${p.intent_strength === 'high' ? 'bg-emerald-500' : p.intent_strength === 'medium' ? 'bg-amber-500' : 'bg-zinc-500'}`} />
+                      <div className={`w-1.5 h-1.5 rounded-full ${p.intent_strength === 'high' ? 'bg-blue-500' : p.intent_strength === 'medium' ? 'bg-amber-500' : 'bg-zinc-500'}`} />
                       <span className="text-xs text-zinc-400">{p.intent_type || 'Discovery'}</span>
                     </div>
                   </td>
@@ -128,9 +136,22 @@ export default function ProspectsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-zinc-600 hover:text-white transition-colors">
-                      <MoreVertical size={18} />
-                    </button>
+                    <div className="flex items-center justify-end space-x-2">
+                      <button 
+                        onClick={async () => {
+                          const link = await collaboration.generateShareLink('prospect', p.id);
+                          navigator.clipboard.writeText(link);
+                          alert('Lien de partage copié !');
+                        }}
+                        className="text-zinc-600 hover:text-blue-400 transition-colors"
+                        title="Partager"
+                      >
+                        <Share2 size={18} />
+                      </button>
+                      <button className="text-zinc-600 hover:text-white transition-colors">
+                        <MoreVertical size={18} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

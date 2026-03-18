@@ -1,39 +1,39 @@
-# 🚀 Uprising Outreach Pro
+# Uprising Outreach Pro - v2.0
+> L'excellence de la prospection B2B automatisée par l'intelligence artificielle.
 
-Système de prospection B2B multicanal (Email + SMS) avec intelligence artificielle locale (**Ollama**) et interface premium.
+## Vision
+Uprising Outreach Pro est un moteur de prospection intelligent conçu pour les entreprises exigeantes. Il fusionne le scraping multi-sources, l'enrichissement social et l'IA locale (Ollama) pour transformer des recherches simples en opportunités de business hautement personnalisées.
 
-## 🛠️ Stack Technique
-- **Frontend** : Next.js 14, TailwindCSS, Shadcn/UI, Recharts.
-- **Backend** : Next.js API Routes, Supabase (PostgreSQL).
-- **IA** : Ollama en local avec le modèle **`kimi-k2.5`**.
-- **Canaux** : Gmail API (OAuth2), Twilio (SMS), Resend (Transactional Email).
-- **Automation** : Inngest/Cron compatible et Webhooks pour le scraping (Apify).
+## Piliers du Système
 
-## 📋 Prérequis
-1. **Ollama** : Doit être installé et lancé.
-   ```bash
-   ollama pull kimi-k2.5
-   ```
-2. **Supabase** : Un projet actif avec le schéma fourni dans `supabase/migrations`.
-3. **Node.js** : v18+ recommandé.
+### 1. Intelligence Multi-Sources
+Fini l'époque des listes statiques. Notre système interroge en temps réel :
+*   **Google Maps & Yelp** (via Apify) pour des données d'entreprises locales précises.
+*   **Web Crawling Premium** (via Puppeteer) pour extraire l'essence des sites web.
+*   **Réseaux Sociaux** : Détection automatique des profils LinkedIn, Facebook et Instagram.
 
-## 🚀 Installation & Lancement
-1. Clone le projet ou accède au dossier.
-2. Installe les dépendances :
-   ```bash
-   npm install
-   ```
-3. Configure ton fichier `.env.local` (voir `.env.local.example`).
-4. Lance l'environnement de développement :
-   ```powershell
-   .\dev.ps1
-   ```
+### 2. Scoring d'Opportunité (Lead Intelligence)
+L'IA ne se contente pas de trouver des leads, elle les évalue :
+*   **Analyse d'Ancienneté** : Détecte les sites web obsolètes (>3 ans) pour prioriser les offres de refonte.
+*   **Présence Sociale** : Score basé sur l'activité et la complétude des données.
+*   **High-Intent Matching** : Identification des prospects ayant le plus fort potentiel de conversion.
 
-## 📂 Structure du Projet
-- `src/lib/llm.ts` : Moteur de personnalisation IA.
-- `src/lib/orchestration.ts` : Logique de séquence multicanale.
-- `src/lib/scraping.ts` : Traitement des données entrantes.
-- `src/app/` : Pages du dashboard (Prospects, Campagnes, Analytics).
+### 3. Outreach Ultra-Personnalisé
+Grâce à l'intégration locale de **Ollama (Kimi K2.5)** :
+*   Génération de copies emails et SMS uniques.
+*   Adaptation du ton selon l'industrie et le score de maturité du prospect.
+*   Séquences intelligentes pilotées par les données.
+
+### 4. Collaboration & Dashboard
+*   **Espace Collaboratif** : Partagez instantanément des leads ou des campagnes avec vos collègues.
+*   **Analytics Glassmorphism** : Un tableau de bord premium pour suivre vos performances en temps réel.
+*   **Zéro Mock** : Un système conçu nativement pour la donnée réelle, sans compromis.
+
+## Technologies
+*   **Frontend** : Next.js 16 (Turbopack), Tailwind 4, React 19.
+*   **Backend** : Supabase (Self-hosted), API Routes.
+*   **Automation** : Apify, Puppeteer Extra Stealth.
+*   **IA** : Ollama (Local LLM).
 
 ---
-*Propulsé par Uprising Studio • v1.0.0*
+*Uprising Outreach Pro - Repoussez les limites de votre croissance.*
