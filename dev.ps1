@@ -19,25 +19,26 @@ if (Test-Path ".env.local") {
 
 # Vérifier Supabase Docker
 Write-Host "🐳 Vérification de Supabase Docker..." -ForegroundColor Cyan
-$dockerCheck = docker ps --filter "name=supabase-db" --format "{{.Names}}"
-if ($dockerCheck) {
-    Write-Host "✅ Supabase Docker ($dockerCheck) est en cours d'exécution." -ForegroundColor Green
-} else {
-    Write-Host "⚠️ Supabase Docker n'est pas lancé." -ForegroundColor Yellow
-    $choice = Read-Host "Voulez-vous lancer Supabase via Docker Compose ? (y/n)"
-    if ($choice -eq 'y') {
-        # S'assurer que le .env existe pour Docker
-        if (-not (Test-Path "supabase/docker/.env")) {
-            Write-Host "📝 Création de supabase/docker/.env à partir de l'exemple..." -ForegroundColor Yellow
-            Copy-Item "supabase/docker/.env.example" "supabase/docker/.env"
-        }
-        Write-Host "🚀 Lancement de Docker Compose..." -ForegroundColor Green
-        docker compose -f supabase/docker/docker-compose.yml up -d
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host "❌ Erreur : Docker n'est probablement pas lancé. Ouvre Docker Desktop." -ForegroundColor Red
+try {
+    $dockerCheck = & docker ps --filter "name=supabase-db" --format "{{.Names}}"
+    if ($dockerCheck) {
+        Write-Host "✅ Supabase Docker ($dockerCheck) est en cours d'exécution." -ForegroundColor Green
+    } else {
+        Write-Host "⚠️ Supabase Docker n'est pas lancé." -ForegroundColor Yellow
+        $choice = Read-Host "Voulez-vous lancer Supabase via Docker Compose ? (y/n)"
+        if ($choice -eq 'y') {
+            if (-not (Test-Path "supabase/docker/.env")) {
+                Write-Host "📝 Création de supabase/docker/.env..." -ForegroundColor Yellow
+                Copy-Item "supabase/docker/.env.example" "supabase/docker/.env"
+            }
+            Write-Host "🚀 Lancement de Docker Compose..." -ForegroundColor Green
+            & docker compose -f supabase/docker/docker-compose.yml up -d
         }
     }
+} catch {
+    Write-Host "⚠️ Docker n'est pas disponible ou erreur lors de la vérification." -ForegroundColor Yellow
 }
+
 
 
 Write-Host "📡 Lancement de Next.js sur http://localhost:3000" -ForegroundColor Green
